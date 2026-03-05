@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/widget_primary_container"
+    android:padding="8dp">
+
+    <ImageView
+        android:id="@+id/widget_turntable_album_art"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_centerInParent="true"
+        android:contentDescription="Album art" />
+
+    <ImageButton
+        android:id="@+id/widget_turntable_play_container"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_below="@id/widget_turntable_album_art"
+        android:layout_marginTop="8dp"
+        android:layout_centerHorizontal="true"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="Play/Pause" />
+
+    <ImageButton
+        android:id="@+id/widget_turntable_prev_button"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_toLeftOf="@id/widget_turntable_play_container"
+        android:layout_alignTop="@id/widget_turntable_play_container"
+        android:layout_marginEnd="16dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="Previous" />
+
+    <ImageButton
+        android:id="@+id/widget_turntable_next_button"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_toRightOf="@id/widget_turntable_play_container"
+        android:layout_alignTop="@id/widget_turntable_play_container"
+        android:layout_marginStart="16dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="Next" />
+
+</RelativeLayout>
