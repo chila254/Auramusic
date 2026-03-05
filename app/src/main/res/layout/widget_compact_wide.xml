@@ -46,7 +46,7 @@
     </LinearLayout>
 
     <ImageView
-        android:id="@+id/widget_wide_play_container"
+        android:id="@+id/widget_wide_play_pause"
         android:layout_width="36dp"
         android:layout_height="36dp"
         android:layout_toStartOf="@id/widget_wide_like_button"

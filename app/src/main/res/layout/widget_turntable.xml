@@ -13,7 +13,7 @@
         android:contentDescription="Album art" />
 
     <ImageButton
-        android:id="@+id/widget_turntable_play_container"
+        android:id="@+id/widget_turntable_play_pause"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_below="@id/widget_turntable_album_art"

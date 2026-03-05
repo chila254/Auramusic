@@ -1,6 +1,7 @@
 package com.auramusic.app.playback
 
 import android.content.Context
+import androidx.media3.common.MediaMetadata
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -13,7 +14,7 @@ import kotlinx.coroutines.flow.StateFlow
 class CastConnectionHandler(
     private val context: Context,
     private val scope: CoroutineScope,
-    private val listener: CastConnectionListener
+    private val listener: CastConnectionListener?
 ) {
     val isCasting: StateFlow<Boolean> = MutableStateFlow(false)
     val castIsPlaying: StateFlow<Boolean> = MutableStateFlow(false)
@@ -57,6 +58,22 @@ class CastConnectionHandler(
     }
 
     fun closeRPC() {
+        // No-op for FOSS builds
+    }
+
+    /**
+     * Navigate to media if it's already in the Cast queue
+     * @return true if navigation was successful, false otherwise
+     */
+    fun navigateToMediaIfInQueue(mediaId: String): Boolean {
+        // No-op for FOSS builds - always return false
+        return false
+    }
+
+    /**
+     * Load media to Cast device
+     */
+    fun loadMedia(metadata: MediaMetadata) {
         // No-op for FOSS builds
     }
 

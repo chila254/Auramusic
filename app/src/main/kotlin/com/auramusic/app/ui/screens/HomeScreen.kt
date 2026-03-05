@@ -451,7 +451,7 @@ fun HomeScreen(
                                         verticalArrangement = androidx.compose.foundation.layout.Arrangement.Center
                                     ) {
                                         val bbhFont = try {
-                                            FontFamily(Font(R.font.bbh_bartle_regular))
+                                            FontFamily.Default
                                         } catch (e: Exception) {
                                             FontFamily.Default
                                         }
