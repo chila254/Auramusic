@@ -9,7 +9,7 @@ A modern Android music player with YouTube Music integration, powerful audio fea
 ![Android](https://img.shields.io/badge/Android-26%2B-2?style=for-the-badge&logo=android)
 ![Kotlin](https://img.shields.io/badge/Kotlin-2.3-7F52FF?style=for-the-badge&logo=kotlin)
 ![Compose](https://img.shields.io/badge/Compose-Latest-4285F4?style=for-the-badge)
-![License](https://img.shields.io/badge/License-MIT-4CAF50?style=for-the-badge)
+![License](https://img.shields.io/badge/License-GPL--3.0-4CAF50?style=for-the-badge)
 
 </div>
 
@@ -66,7 +66,7 @@ cp local.properties.example local.properties
 
 ## License
 
-MIT License - see [LICENSE](LICENSE) file
+GNU General Public License v3.0 (GPL-3.0) - see [LICENSE](LICENSE) file
 
 ---
 
