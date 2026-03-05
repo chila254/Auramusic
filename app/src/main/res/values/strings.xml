@@ -515,8 +515,6 @@
     <string name="keep_screen_on_when_player_is_expanded">Keep screen on when player is expanded</string>
 
     <!-- Queue settings -->
-    <string name="queue">Queue</string>
-
     <!-- Storage -->
     <string name="storage">Storage</string>
     <string name="cache">Cache</string>
