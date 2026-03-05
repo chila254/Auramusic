@@ -175,7 +175,6 @@
     <string name="suggest_to_host">Suggest to host</string>
     <string name="equalizer">Equalizer</string>
     <string name="equalizer_desc">Customize audio frequencies</string>
-    <string name="advanced">Advanced</string>
     <string name="advanced_desc">Advanced audio settings</string>
     <string name="resync">Resync</string>
     <string name="manage_user">Manage user</string>
