@@ -49,7 +49,7 @@ android {
         }
     }
 
-    flavorDimensions += listOf("abi", "variant")
+    flavorDimensions += listOf("variant", "abi")
     productFlavors {
         // FOSS variant (default) - F-Droid compatible, no Google Play Services
         create("foss") {
