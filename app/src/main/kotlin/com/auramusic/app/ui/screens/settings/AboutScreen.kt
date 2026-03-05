@@ -40,6 +40,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -64,13 +65,15 @@ fun AboutScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        Spacer(Modifier.height(48.dp))
+        Spacer(Modifier.height(64.dp))
 
         // App Name
         Text(
             text = "AURAMUSIC",
-            style = MaterialTheme.typography.headlineLarge,
-            fontWeight = FontWeight.Bold,
+            style = MaterialTheme.typography.headlineLarge.copy(
+                fontFamily = FontFamily.Serif,
+                fontWeight = FontWeight.Bold
+            ),
             color = MaterialTheme.colorScheme.onSurface
         )
 
