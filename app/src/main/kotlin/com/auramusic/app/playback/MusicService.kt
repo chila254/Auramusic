@@ -154,7 +154,7 @@ import com.auramusic.app.utils.YTPlayerUtils
 import com.auramusic.app.utils.dataStore
 import com.auramusic.app.utils.get
 import com.auramusic.app.utils.reportException
-import com.auramusic.app.widget.MetrolistWidgetManager
+import com.auramusic.app.widget.AuraMusicWidgetManager
 import com.auramusic.app.widget.MusicWidgetReceiver
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
@@ -217,7 +217,7 @@ class MusicService :
     lateinit var eqProfileRepository: EQProfileRepository
 
     @Inject
-    lateinit var widgetManager: MetrolistWidgetManager
+    lateinit var widgetManager: AuraMusicWidgetManager
 
     private lateinit var audioManager: AudioManager
     private var audioFocusRequest: AudioFocusRequest? = null
