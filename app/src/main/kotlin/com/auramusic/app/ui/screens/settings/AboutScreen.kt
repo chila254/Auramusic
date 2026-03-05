@@ -66,21 +66,6 @@ fun AboutScreen(
     ) {
         Spacer(Modifier.height(24.dp))
 
-        // App Icon with modern styling
-        Box(
-            contentAlignment = Alignment.Center,
-            modifier = Modifier
-                .size(140.dp)
-                .clip(CircleShape)
-                .background(MaterialTheme.colorScheme.primary)
-        ) {
-            Image(
-                painter = painterResource(R.drawable.ic_launcher_foreground),
-                contentDescription = "AuraMusic Icon",
-                modifier = Modifier.size(100.dp)
-            )
-        }
-
         // App Name
         Text(
             text = "AURAMUSIC",
