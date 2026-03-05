@@ -764,7 +764,7 @@ class ListenTogetherClient @Inject constructor(
             
             when (msgType) {
                 MessageTypes.ROOM_CREATED -> {
-                    val payload = codec.decodePayload(msgType, payloadBytes, detectedFormat) as? RoomCreatedPayload ?: return
+                    val payload = codec.decodePayload(msgType, payloadBytes, codec.format) as? RoomCreatedPayload ?: return
                     _userId.value = payload.userId
                     _role.value = RoomRole.HOST
                     sessionToken = payload.sessionToken
@@ -799,7 +799,7 @@ class ListenTogetherClient @Inject constructor(
                 }
                 
                 MessageTypes.JOIN_REQUEST -> {
-                    val payload = codec.decodePayload(msgType, payloadBytes, detectedFormat) as? JoinRequestPayload ?: return
+                    val payload = codec.decodePayload(msgType, payloadBytes, codec.format) as? JoinRequestPayload ?: return
                     
                     // Check if user is blocked
                     if (isUserBlocked(payload.username)) {
@@ -831,7 +831,7 @@ class ListenTogetherClient @Inject constructor(
                 }
                 
                 MessageTypes.JOIN_APPROVED -> {
-                    val payload = codec.decodePayload(msgType, payloadBytes, detectedFormat) as? JoinApprovedPayload ?: return
+                    val payload = codec.decodePayload(msgType, payloadBytes, codec.format) as? JoinApprovedPayload ?: return
                     _userId.value = payload.userId
                     _role.value = RoomRole.GUEST
                     sessionToken = payload.sessionToken
@@ -850,13 +850,13 @@ class ListenTogetherClient @Inject constructor(
                 }
                 
                 MessageTypes.JOIN_REJECTED -> {
-                    val payload = codec.decodePayload(msgType, payloadBytes, detectedFormat) as? JoinRejectedPayload ?: return
+                    val payload = codec.decodePayload(msgType, payloadBytes, codec.format) as? JoinRejectedPayload ?: return
                     log(LogLevel.WARNING, "Join rejected", payload.reason)
                     scope.launch { _events.emit(ListenTogetherEvent.JoinRejected(payload.reason)) }
                 }
                 
                 MessageTypes.USER_JOINED -> {
-                    val payload = codec.decodePayload(msgType, payloadBytes, detectedFormat) as? UserJoinedPayload ?: return
+                    val payload = codec.decodePayload(msgType, payloadBytes, codec.format) as? UserJoinedPayload ?: return
                     _roomState.value = _roomState.value?.copy(
                         users = _roomState.value!!.users + UserInfo(payload.userId, payload.username, false)
                     )
@@ -872,7 +872,7 @@ class ListenTogetherClient @Inject constructor(
                 }
                 
                 MessageTypes.USER_LEFT -> {
-                    val payload = codec.decodePayload(msgType, payloadBytes, detectedFormat) as? UserLeftPayload ?: return
+                    val payload = codec.decodePayload(msgType, payloadBytes, codec.format) as? UserLeftPayload ?: return
                     _roomState.value = _roomState.value?.copy(
                         users = _roomState.value!!.users.filter { it.userId != payload.userId }
                     )
@@ -881,7 +881,7 @@ class ListenTogetherClient @Inject constructor(
                 }
                 
                 MessageTypes.HOST_CHANGED -> {
-                    val payload = codec.decodePayload(msgType, payloadBytes, detectedFormat) as? HostChangedPayload ?: return
+                    val payload = codec.decodePayload(msgType, payloadBytes, codec.format) as? HostChangedPayload ?: return
                     _roomState.value = _roomState.value?.copy(
                         hostId = payload.newHostId,
                         users = _roomState.value!!.users.map { 
@@ -899,7 +899,7 @@ class ListenTogetherClient @Inject constructor(
                 }
                 
                 MessageTypes.KICKED -> {
-                    val payload = codec.decodePayload(msgType, payloadBytes, detectedFormat) as? KickedPayload ?: return
+                    val payload = codec.decodePayload(msgType, payloadBytes, codec.format) as? KickedPayload ?: return
                     log(LogLevel.WARNING, "Kicked from room", payload.reason)
                     releaseWakeLock() // Release wake lock when kicked
                     sessionToken = null
@@ -909,7 +909,7 @@ class ListenTogetherClient @Inject constructor(
                 }
                 
                 MessageTypes.SYNC_PLAYBACK -> {
-                    val payload = codec.decodePayload(msgType, payloadBytes, detectedFormat) as? PlaybackActionPayload ?: return
+                    val payload = codec.decodePayload(msgType, payloadBytes, codec.format) as? PlaybackActionPayload ?: return
                     log(LogLevel.DEBUG, "Playback sync", "Action: ${payload.action}")
                     
                     // Update room state based on action
@@ -971,27 +971,27 @@ class ListenTogetherClient @Inject constructor(
                 }
                 
                 MessageTypes.BUFFER_WAIT -> {
-                    val payload = codec.decodePayload(msgType, payloadBytes, detectedFormat) as? BufferWaitPayload ?: return
+                    val payload = codec.decodePayload(msgType, payloadBytes, codec.format) as? BufferWaitPayload ?: return
                     _bufferingUsers.value = payload.waitingFor
                     log(LogLevel.DEBUG, "Waiting for buffering", "Users: ${payload.waitingFor.size}")
                     scope.launch { _events.emit(ListenTogetherEvent.BufferWait(payload.trackId, payload.waitingFor)) }
                 }
                 
                 MessageTypes.BUFFER_COMPLETE -> {
-                    val payload = codec.decodePayload(msgType, payloadBytes, detectedFormat) as? BufferCompletePayload ?: return
+                    val payload = codec.decodePayload(msgType, payloadBytes, codec.format) as? BufferCompletePayload ?: return
                     _bufferingUsers.value = emptyList()
                     log(LogLevel.INFO, "All users buffered", "Track: ${payload.trackId}")
                     scope.launch { _events.emit(ListenTogetherEvent.BufferComplete(payload.trackId)) }
                 }
                 
                 MessageTypes.SYNC_STATE -> {
-                    val payload = codec.decodePayload(msgType, payloadBytes, detectedFormat) as? SyncStatePayload ?: return
+                    val payload = codec.decodePayload(msgType, payloadBytes, codec.format) as? SyncStatePayload ?: return
                     log(LogLevel.INFO, "Sync state received", "Playing: ${payload.isPlaying}, Position: ${payload.position}")
                     scope.launch { _events.emit(ListenTogetherEvent.SyncStateReceived(payload)) }
                 }
                 
                 MessageTypes.SUGGESTION_RECEIVED -> {
-                    val payload = codec.decodePayload(msgType, payloadBytes, detectedFormat) as? SuggestionReceivedPayload ?: return
+                    val payload = codec.decodePayload(msgType, payloadBytes, codec.format) as? SuggestionReceivedPayload ?: return
                     // Only host should receive suggestions
                     if (_role.value == RoomRole.HOST) {
                         // Check if user is blocked
@@ -1010,7 +1010,7 @@ class ListenTogetherClient @Inject constructor(
                 }
 
                 MessageTypes.SUGGESTION_APPROVED -> {
-                    val payload = codec.decodePayload(msgType, payloadBytes, detectedFormat) as? SuggestionApprovedPayload ?: return
+                    val payload = codec.decodePayload(msgType, payloadBytes, codec.format) as? SuggestionApprovedPayload ?: return
                     log(LogLevel.INFO, "Suggestion approved", payload.trackInfo.title)
                     
                     // Dismiss notification if it exists (for host who approved via another device/modal)
@@ -1022,7 +1022,7 @@ class ListenTogetherClient @Inject constructor(
                 }
 
                 MessageTypes.SUGGESTION_REJECTED -> {
-                    val payload = codec.decodePayload(msgType, payloadBytes, detectedFormat) as? SuggestionRejectedPayload ?: return
+                    val payload = codec.decodePayload(msgType, payloadBytes, codec.format) as? SuggestionRejectedPayload ?: return
                     log(LogLevel.WARNING, "Suggestion rejected", payload.reason ?: "")
                     
                     // Dismiss notification if it exists
@@ -1034,7 +1034,7 @@ class ListenTogetherClient @Inject constructor(
                 }
                 
                 MessageTypes.ERROR -> {
-                    val payload = codec.decodePayload(msgType, payloadBytes, detectedFormat) as? ErrorPayload ?: return
+                    val payload = codec.decodePayload(msgType, payloadBytes, codec.format) as? ErrorPayload ?: return
                     log(LogLevel.ERROR, "Server error", "${payload.code}: ${payload.message}")
                     
                     // Handle specific error cases
@@ -1071,7 +1071,7 @@ class ListenTogetherClient @Inject constructor(
                 }
                 
                 MessageTypes.RECONNECTED -> {
-                    val payload = codec.decodePayload(msgType, payloadBytes, detectedFormat) as? ReconnectedPayload ?: return
+                    val payload = codec.decodePayload(msgType, payloadBytes, codec.format) as? ReconnectedPayload ?: return
                     _userId.value = payload.userId
                     _role.value = if (payload.isHost) RoomRole.HOST else RoomRole.GUEST
                     _roomState.value = payload.state
@@ -1091,7 +1091,7 @@ class ListenTogetherClient @Inject constructor(
                 }
                 
                 MessageTypes.USER_RECONNECTED -> {
-                    val payload = codec.decodePayload(msgType, payloadBytes, detectedFormat) as? UserReconnectedPayload ?: return
+                    val payload = codec.decodePayload(msgType, payloadBytes, codec.format) as? UserReconnectedPayload ?: return
                     // Mark user as connected in the room state
                     _roomState.value = _roomState.value?.copy(
                         users = _roomState.value!!.users.map { user ->
@@ -1103,7 +1103,7 @@ class ListenTogetherClient @Inject constructor(
                 }
                 
                 MessageTypes.USER_DISCONNECTED -> {
-                    val payload = codec.decodePayload(msgType, payloadBytes, detectedFormat) as? UserDisconnectedPayload ?: return
+                    val payload = codec.decodePayload(msgType, payloadBytes, codec.format) as? UserDisconnectedPayload ?: return
                     // Mark user as disconnected in the room state
                     _roomState.value = _roomState.value?.copy(
                         users = _roomState.value!!.users.map { user ->

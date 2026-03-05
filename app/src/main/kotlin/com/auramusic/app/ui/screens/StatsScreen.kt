@@ -246,7 +246,7 @@ fun StatsScreen(
                             subtitle =
                             joinByBullet(
                                 pluralStringResource(
-                                    R.plurals.n_time,
+                                    R.string.n_time,
                                     song.songCountListened,
                                     song.songCountListened,
                                 ),
@@ -306,7 +306,7 @@ fun StatsScreen(
                             subtitle =
                             joinByBullet(
                                 pluralStringResource(
-                                    R.plurals.n_time,
+                                    R.string.n_time,
                                     artist.songCount,
                                     artist.songCount
                                 ),
@@ -355,7 +355,7 @@ fun StatsScreen(
                                 subtitle =
                                 joinByBullet(
                                     pluralStringResource(
-                                        R.plurals.n_time,
+                                        R.string.n_time,
                                         album.songCountListened!!,
                                         album.songCountListened
                                     ),

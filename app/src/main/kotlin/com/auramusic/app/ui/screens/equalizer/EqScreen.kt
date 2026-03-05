@@ -221,7 +221,7 @@ private fun EqScreenContent(
                     )
                     Text(
                         text = pluralStringResource(
-                            id = R.plurals.profiles_count,
+                            id = R.string.profiles_count,
                             count = profiles.size,
                             profiles.size
                         ),
@@ -358,7 +358,7 @@ private fun EQProfileItem(
         supportingContent = {
             Text(
                 pluralStringResource(
-                    id = R.plurals.band_count,
+                    id = R.string.band_count,
                     count = profile.bands.size,
                     profile.bands.size
                 )
