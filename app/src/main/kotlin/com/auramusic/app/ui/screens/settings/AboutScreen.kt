@@ -78,16 +78,12 @@ fun AboutScreen(
         Spacer(Modifier.height(4.dp))
 
         Image(
-            painter = painterResource(R.drawable.ic_launcher_foreground),
+            painter = painterResource(R.drawable.app_logo),
             contentDescription = null,
-            colorFilter = ColorFilter.tint(
-                MaterialTheme.colorScheme.primary,
-                BlendMode.SrcIn
-            ),
             modifier = Modifier
-                .size(96.dp)
+                .size(120.dp)
                 .clip(CircleShape)
-                .background(MaterialTheme.colorScheme.primaryContainer)
+                .background(MaterialTheme.colorScheme.surface)
                 .clickable { },
         )
 
