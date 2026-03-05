@@ -6,11 +6,8 @@
 <resources>
     <!-- App name -->
     <string name="app_name">AuraMusic</string>
-    <string name="update_channel_name">Updates</string>
     <string name="update_channel_desc">App update notifications</string>
-    <string name="update_available_title">Update available</string>
     <string name="update_channel_name">Updates</string>
-    <string name="update_channel_desc">App update notifications</string>
     <string name="update_available_title">Update available</string>
     <string name="app_description">Music streaming application</string>
 
@@ -42,9 +39,6 @@
     <string name="similar_to">Similar to</string>
     <string name="similar_content">Similar content</string>
     <string name="new_release_albums">New release albums</string>
-    <string name="wrapped_top_album_title">Top album</string>
-    <string name="wrapped_top_5_albums_title">Top 5 albums</string>
-    <string name="wrapped_artist_listening_time">%d min</string>
     <string name="wrapped_top_album_title">Top album</string>
     <string name="wrapped_top_5_albums_title">Top 5 albums</string>
     <string name="wrapped_artist_listening_time">%d min</string>
