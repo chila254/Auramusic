@@ -65,7 +65,7 @@ fun AboutScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        Spacer(Modifier.height(64.dp))
+        Spacer(Modifier.height(96.dp))
 
         // App Name
         Text(
