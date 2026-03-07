@@ -166,6 +166,7 @@ import com.auramusic.app.ui.menu.YouTubeSongMenu
 import com.auramusic.app.ui.player.BottomSheetPlayer
 import com.auramusic.app.ui.screens.Screens
 import com.auramusic.app.ui.screens.navigationBuilder
+import com.auramusic.app.ui.screens.settings.ChangelogScreen
 import com.auramusic.app.ui.screens.settings.DarkMode
 import com.auramusic.app.ui.screens.settings.NavigationTab
 import com.auramusic.app.ui.theme.ColorSaver
@@ -758,6 +759,7 @@ class MainActivity : ComponentActivity() {
                     LocalShimmerTheme provides ShimmerTheme,
                     LocalSyncUtils provides syncUtils,
                     LocalListenTogetherManager provides listenTogetherManager,
+                    LocalChangelogState provides remember { mutableStateOf(false) },
                 ) {
 
                     Scaffold(
@@ -1085,6 +1087,14 @@ class MainActivity : ComponentActivity() {
                         )
                     }
 
+                    val changelogState = LocalChangelogState.current
+
+                    if (changelogState.value) {
+                        ChangelogScreen(
+                            onDismiss = { changelogState.value = false }
+                        )
+                    }
+
                     sharedSong?.let { song ->
                         playerConnection?.let {
                             Dialog(
@@ -1229,3 +1239,5 @@ val LocalDownloadUtil = staticCompositionLocalOf<DownloadUtil> { error("No Downl
 val LocalSyncUtils = staticCompositionLocalOf<SyncUtils> { error("No SyncUtils provided") }
 val LocalListenTogetherManager = staticCompositionLocalOf<com.auramusic.app.listentogether.ListenTogetherManager?> { null }
 val LocalIsPlayerExpanded = compositionLocalOf { false }
+val LocalChangelogState = compositionLocalOf { mutableStateOf(false) }
+val LocalChangelogState = compositionLocalOf { mutableStateOf(false) }

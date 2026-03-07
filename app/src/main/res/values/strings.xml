@@ -829,6 +829,13 @@
     <string name="check_for_updates">Check for updates</string>
     <string name="update_notifications">Update notifications</string>
 
+    <!-- Changelog -->
+    <string name="changelog">Changelog</string>
+    <string name="changelog_empty">No releases yet</string>
+    <string name="view_on_github">View on GitHub</string>
+    <string name="github_releases_url">https://github.com/chila254/Auramusic-v1/releases</string>
+    <string name="list_bullet">•</string>
+
     <!-- Theme colors -->
     <string name="palette_dynamic">Dynamic</string>
     <string name="palette_crimson">Crimson</string>
