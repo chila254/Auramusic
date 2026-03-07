@@ -47,13 +47,29 @@ private const val HEAD_CUT_LIMIT = 30
 /**
  * KuGou Lyrics Library
  * Modified from [ViMusic](https://github.com/vfsfitvnm/ViMusic)
+ * Simplified approach matching ArchiveTune - no album parameter
  */
 object KuGou {
     var useTraditionalChinese: Boolean = false
 
-    suspend fun getLyrics(title: String, artist: String, duration: Int, album: String? = null): Result<String> =
+    /**
+     * Get lyrics - ArchiveTune simplified approach (without album)
+     */
+    suspend fun getLyrics(title: String, artist: String, duration: Int): Result<String> =
         runCatching {
-            val keyword = generateKeyword(title, artist, album)
+            val keyword = generateKeyword(title, artist)
+            getLyricsCandidate(keyword, duration)?.let { candidate ->
+                Base64.Default.decode(downloadLyrics(candidate.id, candidate.accesskey).content).decodeToString()
+                    .normalize()
+            } ?: throw IllegalStateException("No lyrics candidate")
+        }
+
+    /**
+     * Get lyrics with album support (AuraMusic extended approach)
+     */
+    suspend fun getLyricsWithAlbum(title: String, artist: String, duration: Int, album: String? = null): Result<String> =
+        runCatching {
+            val keyword = generateKeywordWithAlbum(title, artist, album)
             getLyricsCandidate(keyword, duration)?.let { candidate ->
                 Base64.Default.decode(downloadLyrics(candidate.id, candidate.accesskey).content).decodeToString()
                     .normalize()
@@ -61,9 +77,30 @@ object KuGou {
         }
 
     suspend fun getAllPossibleLyricsOptions(
+        title: String, artist: String, duration: Int, callback: (String) -> Unit
+    ) {
+        val keyword = generateKeyword(title, artist)
+        searchSongs(keyword).data.info.forEach {
+            if (duration == -1 || abs(it.duration - duration) <= DURATION_TOLERANCE) {
+                searchLyricsByHash(it.hash).candidates.firstOrNull()?.let { candidate ->
+                    Base64.Default.decode(downloadLyrics(candidate.id, candidate.accesskey).content).decodeToString()
+                        .normalize().let(callback)
+                }
+            }
+        }
+        searchLyricsByKeyword(keyword, duration).candidates.forEach { candidate ->
+            Base64.Default.decode(downloadLyrics(candidate.id, candidate.accesskey).content).decodeToString()
+                .normalize().let(callback)
+        }
+    }
+
+    /**
+     * Get all lyrics options with album support (AuraMusic extended)
+     */
+    suspend fun getAllPossibleLyricsOptionsWithAlbum(
         title: String, artist: String, duration: Int, album: String? = null, callback: (String) -> Unit
     ) {
-        val keyword = generateKeyword(title, artist, album)
+        val keyword = generateKeywordWithAlbum(title, artist, album)
         searchSongs(keyword).data.info.forEach {
             if (duration == -1 || abs(it.duration - duration) <= DURATION_TOLERANCE) {
                 searchLyricsByHash(it.hash).candidates.firstOrNull()?.let { candidate ->
@@ -162,7 +199,16 @@ object KuGou {
         artist.replace(", ", "、").replace(" & ", "、").replace(".", "").replace("和", "、")
             .replace("\\(.*\\)".toRegex(), "").replace("（.*）".toRegex(), "")
 
-    fun generateKeyword(title: String, artist: String, album: String? = null) =
+    /**
+     * Generate keyword - ArchiveTune simplified approach (without album)
+     */
+    fun generateKeyword(title: String, artist: String) =
+        Keyword(normalizeTitle(title), normalizeArtist(artist), null)
+
+    /**
+     * Generate keyword with album - AuraMusic extended approach
+     */
+    fun generateKeywordWithAlbum(title: String, artist: String, album: String? = null) =
         Keyword(normalizeTitle(title), normalizeArtist(artist), album)
 
     private fun String.normalize(): String =

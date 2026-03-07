@@ -16,6 +16,9 @@ object KuGouLyricsProvider : LyricsProvider {
     override fun isEnabled(context: Context): Boolean =
         context.dataStore[EnableKugouKey] ?: true
 
+    /**
+     * Get lyrics - ArchiveTune simplified approach (without album parameter)
+     */
     override suspend fun getLyrics(
         id: String,
         title: String,
@@ -23,8 +26,12 @@ object KuGouLyricsProvider : LyricsProvider {
         duration: Int,
         album: String?,
     ): Result<String> =
-        KuGou.getLyrics(title, artist, duration, album)
+        // Use simplified approach matching ArchiveTune
+        KuGou.getLyrics(title, artist, duration)
 
+    /**
+     * Get all lyrics options - ArchiveTune simplified approach
+     */
     override suspend fun getAllLyrics(
         id: String,
         title: String,
@@ -33,6 +40,7 @@ object KuGouLyricsProvider : LyricsProvider {
         album: String?,
         callback: (String) -> Unit,
     ) {
-        KuGou.getAllPossibleLyricsOptions(title, artist, duration, album, callback)
+        // Use simplified approach matching ArchiveTune
+        KuGou.getAllPossibleLyricsOptions(title, artist, duration, callback)
     }
 }

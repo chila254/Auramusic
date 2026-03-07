@@ -87,14 +87,6 @@ constructor(
                             BetterLyricsProvider,
                             LrcLibLyricsProvider,
                             KuGouLyricsProvider,
-                                            YouTubeSubtitleLyricsProvider,
-                            YouTubeLyricsProvider
-                        )
-                        PreferredLyricsProvider.LYRICS_PLUS -> listOf(
-                                            BetterLyricsProvider,
-                            SimpMusicLyricsProvider,
-                            LrcLibLyricsProvider,
-                            KuGouLyricsProvider,
                             YouTubeSubtitleLyricsProvider,
                             YouTubeLyricsProvider
                         )
