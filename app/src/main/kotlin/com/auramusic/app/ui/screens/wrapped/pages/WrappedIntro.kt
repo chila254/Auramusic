@@ -4,6 +4,7 @@
  */
 
 package com.auramusic.app.ui.screens.wrapped.pages
+import com.auramusic.app.ui.screens.wrapped.WrappedConstants
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.LinearEasing
@@ -138,7 +139,7 @@ fun WrappedIntro(onNext: () -> Unit) {
         ) {
             BoxWithConstraints {
                 AutoResizingText(
-                    text = stringResource(id = R.string.wrapped_year),
+                    text = stringResource(id = R.string.wrapped_year, WrappedConstants.displayMonthYear),
                     style = TextStyle.Default.copy(
                         fontFamily = bbhBartle,
                         fontSize = 800.sp, // Increased size
@@ -221,7 +222,7 @@ fun WrappedIntro(onNext: () -> Unit) {
                 colors = ButtonDefaults.buttonColors(containerColor = Color.White)
             ) {
                 Text(
-                    text = stringResource(id = R.string.wrapped_intro_button),
+                    text = stringResource(id = R.string.wrapped_intro_button, WrappedConstants.displayMonthYear),
                     color = Color.Black,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.padding(horizontal = 24.dp, vertical = 8.dp)

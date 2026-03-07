@@ -745,13 +745,13 @@
     <string name="delete_profile_confirmation">Delete profile</string>
 
     <!-- Wrapped -->
-    <string name="wrapped_ready_title">Your 2024 Wrapped is ready!</string>
-    <string name="wrapped_ready_subtitle">See your year in music</string>
+    <string name="wrapped_ready_title">Your %s Wrapped is ready!</string>
+    <string name="wrapped_ready_subtitle">See your month in music</string>
     <string name="open">Open</string>
-    <string name="wrapped_year">2024</string>
-    <string name="wrapped_intro_title">Your year in music</string>
+    <string name="wrapped_year">%s</string>
+    <string name="wrapped_intro_title">Your month in music</string>
     <string name="wrapped_intro_subtitle">Discover your top songs, artists, and more</string>
-    <string name="wrapped_intro_button">See my 2024</string>
+    <string name="wrapped_intro_button">See my %s</string>
     <string name="wrapped_logo_content_description">AuraMusic Wrapped</string>
     <string name="wrapped_thank_you">Thank you for listening</string>
     <string name="wrapped_special_thanks">Special thanks to</string>
@@ -775,7 +775,7 @@
     <string name="wrapped_playlist_ready">Your playlist is ready</string>
     <string name="album_art_for">Album art for %s</string>
     <string name="album_cover_desc">Album cover</string>
-    <string name="wrapped_playlist_title">Your 2024 Wrapped playlist</string>
+    <string name="wrapped_playlist_title">Your %s Wrapped playlist</string>
     <string name="wrapped_create_playlist">Create playlist</string>
     <string name="wrapped_playlist_saved">Playlist saved</string>
     <string name="wrapped_no_data">No data available</string>

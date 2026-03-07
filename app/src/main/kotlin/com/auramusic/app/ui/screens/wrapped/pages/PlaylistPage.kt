@@ -1,4 +1,5 @@
 package com.auramusic.app.ui.screens.wrapped.pages
+import com.auramusic.app.ui.screens.wrapped.WrappedConstants
 
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
@@ -39,7 +40,6 @@ import androidx.compose.ui.unit.sp
 import com.auramusic.app.R
 import com.auramusic.app.ui.screens.wrapped.LocalWrappedManager
 import com.auramusic.app.ui.screens.wrapped.PlaylistCreationState
-import com.auramusic.app.ui.screens.wrapped.WrappedConstants
 import com.auramusic.app.ui.screens.wrapped.components.AnimatedBackground
 import com.auramusic.app.ui.screens.wrapped.components.AutoResizingText
 import com.auramusic.app.ui.screens.wrapped.components.ShapeType
@@ -102,7 +102,7 @@ fun PlaylistPage() {
             )
             Spacer(modifier = Modifier.height(24.dp))
             Text(
-                text = stringResource(R.string.wrapped_playlist_title, WrappedConstants.YEAR),
+                text = stringResource(R.string.wrapped_playlist_title, WrappedConstants.displayMonthYear),
                 style = TextStyle(
                     fontSize = 22.sp,
                     fontWeight = FontWeight.Bold,

@@ -5,8 +5,36 @@
 
 package com.auramusic.app.ui.screens.wrapped
 
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+
 object WrappedConstants {
-    // This is intentionally hardcoded to 2025 and should not be changed.
+    // Get current year for display
+    val currentYear: Int
+        get() = LocalDate.now().year
+    
+    // Keep YEAR for backward compatibility with WrappedManager
     const val YEAR = 2025
-    const val PLAYLIST_NAME = "Metrolist 2025"
+    
+    // Get previous month for wrapped data
+    val previousMonth: LocalDate
+        get() = LocalDate.now().minusMonths(1)
+    
+    // Format for display: "March 2026"
+    val displayMonthYear: String
+        get() {
+            val formatter = DateTimeFormatter.ofPattern("MMMM yyyy")
+            return previousMonth.format(formatter)
+        }
+    
+    // Format for short display: "Mar 2026"  
+    val shortDisplayMonthYear: String
+        get() {
+            val formatter = DateTimeFormatter.ofPattern("MMM yyyy")
+            return previousMonth.format(formatter)
+        }
+    
+    // Playlist name with AuraMusic branding
+    val PLAYLIST_NAME: String
+        get() = "AuraMusic $displayMonthYear"
 }

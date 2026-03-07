@@ -1240,4 +1240,3 @@ val LocalSyncUtils = staticCompositionLocalOf<SyncUtils> { error("No SyncUtils p
 val LocalListenTogetherManager = staticCompositionLocalOf<com.auramusic.app.listentogether.ListenTogetherManager?> { null }
 val LocalIsPlayerExpanded = compositionLocalOf { false }
 val LocalChangelogState = compositionLocalOf { mutableStateOf(false) }
-val LocalChangelogState = compositionLocalOf { mutableStateOf(false) }

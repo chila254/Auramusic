@@ -4,6 +4,7 @@
  */
 
 package com.auramusic.app.ui.screens
+import com.auramusic.app.ui.screens.wrapped.WrappedConstants
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
@@ -456,7 +457,7 @@ fun HomeScreen(
                                             FontFamily.Default
                                         }
                                         Text(
-                                            text = stringResource(R.string.wrapped_ready_title),
+                                            text = stringResource(R.string.wrapped_ready_title, WrappedConstants.displayMonthYear),
                                             style = MaterialTheme.typography.headlineLarge.copy(
                                                 fontFamily = bbhFont,
                                                 textAlign = TextAlign.Center

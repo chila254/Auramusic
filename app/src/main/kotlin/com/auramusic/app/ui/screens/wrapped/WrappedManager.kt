@@ -183,12 +183,17 @@ class WrappedManager(
         if (_state.value.isDataReady) return
         Timber.tag("WrappedManager").d("Starting Wrapped data preparation")
 
+        // Get previous month for wrapped data
+        val previousMonth = java.time.LocalDate.now().minusMonths(1)
+        val year = previousMonth.year
+        val month = previousMonth.monthValue - 1 // Calendar months are 0-based
+
         val fromTimestamp = Calendar.getInstance().apply {
-            set(WrappedConstants.YEAR, Calendar.JANUARY, 1, 0, 0, 0)
+            set(year, month, 1, 0, 0, 0)
         }.timeInMillis
 
         val toTimestamp = Calendar.getInstance().apply {
-            set(WrappedConstants.YEAR, Calendar.DECEMBER, 31, 23, 59, 59)
+            set(year, month, getActualMaximum(Calendar.DAY_OF_MONTH), 23, 59, 59)
         }.timeInMillis
 
         withContext(Dispatchers.IO) {
