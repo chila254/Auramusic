@@ -18,7 +18,6 @@ interface LyricsProvider {
         artist: String,
         duration: Int,
         album: String? = null,
-        setVideoId: String? = null,
     ): Result<String>
 
     suspend fun getAllLyrics(
@@ -27,9 +26,8 @@ interface LyricsProvider {
         artist: String,
         duration: Int,
         album: String? = null,
-        setVideoId: String? = null,
         callback: (String) -> Unit,
     ) {
-        getLyrics(id, title, artist, duration, album, setVideoId).onSuccess(callback)
+        getLyrics(id, title, artist, duration, album).onSuccess(callback)
     }
 }

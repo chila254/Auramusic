@@ -144,7 +144,6 @@ constructor(
                             mediaMetadata.artists.joinToString { it.name },
                             mediaMetadata.duration,
                             mediaMetadata.album?.title,
-                            mediaMetadata.setVideoId,
                         )
                         result.onSuccess { lyrics ->
                             return@async LyricsWithProvider(lyrics, provider.name)
@@ -171,7 +170,6 @@ constructor(
         songArtists: String,
         duration: Int,
         album: String? = null,
-        setVideoId: String? = null,
         callback: (LyricsResult) -> Unit,
     ) {
         currentLyricsJob?.cancel()
@@ -204,7 +202,7 @@ constructor(
             lyricsProviders.forEach { provider ->
                 if (provider.isEnabled(context)) {
                     try {
-                        provider.getAllLyrics(mediaId, cleanedTitle, songArtists, duration, album, setVideoId) { lyrics ->
+                        provider.getAllLyrics(mediaId, cleanedTitle, songArtists, duration, album) { lyrics ->
                             val result = LyricsResult(provider.name, lyrics)
                             allResult += result
                             callback(result)

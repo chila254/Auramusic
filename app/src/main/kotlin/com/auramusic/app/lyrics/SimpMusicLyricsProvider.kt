@@ -22,12 +22,7 @@ object SimpMusicLyricsProvider : LyricsProvider {
         artist: String,
         duration: Int,
         album: String?,
-        setVideoId: String?,
-    ): Result<String> {
-        // Prefer setVideoId (YouTube video ID) if available, otherwise use id
-        val videoId = setVideoId ?: id
-        return SimpMusicLyrics.getLyrics(videoId, duration)
-    }
+    ): Result<String> = SimpMusicLyrics.getLyrics(id, duration)
 
     override suspend fun getAllLyrics(
         id: String,
@@ -35,11 +30,8 @@ object SimpMusicLyricsProvider : LyricsProvider {
         artist: String,
         duration: Int,
         album: String?,
-        setVideoId: String?,
         callback: (String) -> Unit,
     ) {
-        // Prefer setVideoId (YouTube video ID) if available, otherwise use id
-        val videoId = setVideoId ?: id
-        SimpMusicLyrics.getAllLyrics(videoId, duration, callback)
+        SimpMusicLyrics.getAllLyrics(id, duration, callback)
     }
 }
