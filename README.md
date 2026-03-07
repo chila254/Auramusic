@@ -70,4 +70,30 @@ GNU General Public License v3.0 (GPL-3.0) - see [LICENSE](LICENSE) file
 
 ---
 
+## Special thanks
+
+**InnerTune**
+[Zion Huang](https://github.com/z-huang) • [Malopieds](https://github.com/Malopieds)
+
+**OuterTune**
+[Davide Garberi](https://github.com/DD3Boh) • [Michael Zh](https://github.com/mikooomich)
+
+**Credits:**
+
+[**Kizzy**](https://github.com/dead8309/Kizzy) – for the Discord Rich Presence implementation and inspiration.
+
+[**Better Lyrics**](https://better-lyrics.boidu.dev) – for beautiful time-synced lyrics with word-by-word highlighting, and seamless YouTube Music integration.
+
+[**SimpMusic Lyrics**](https://github.com/maxrave-dev/SimpMusic) – for providing lyrics data through the SimpMusic Lyrics API.
+
+[**metroserver**](https://github.com/MetrolistGroup/metroserver) – for providing us with the listen together implementation.
+
+[**MusicRecognizer**](https://github.com/aleksey-saenko/MusicRecognizer) – for the music recognition feature implementation and Shazam API integration.
+
+The open-source community for tools, libraries, and APIs that make this project possible.
+
+<sub>Thank you to all the amazing developers who made this project possible!</sub>
+
+---
+
 **Developed by [chila254](https://github.com/chila254)**
