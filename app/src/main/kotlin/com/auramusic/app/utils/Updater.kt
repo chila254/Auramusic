@@ -96,8 +96,8 @@ object Updater {
             
             // Parse architecture and variant from filename
             val (arch, variant) = when {
-                name == "Auramusic.apk" -> "universal" to "foss"
-                name == "Auramusic-with-Google-Cast.apk" -> "universal" to "gms"
+                name == "Auramusic.apk" || name == "AuraMusic.apk" -> "universal" to "foss"
+                name == "Auramusic-with-Google-Cast.apk" || name == "AuraMusic-with-Google-Cast.apk" -> "universal" to "gms"
                 name.startsWith("app-") && name.endsWith("-release.apk") -> {
                     val arch = name.removePrefix("app-").removeSuffix("-release.apk")
                     arch to "foss"
@@ -195,9 +195,22 @@ object Updater {
     fun getDownloadUrlForCurrentVariant(releaseInfo: ReleaseInfo): String? {
         val (currentArch, currentVariant) = getCurrentAppVariant()
         
-        return releaseInfo.assets
+        // First try to find exact match
+        val exactMatch = releaseInfo.assets
             .find { it.architecture == currentArch && it.variant == currentVariant }
             ?.downloadUrl
+        
+        if (exactMatch != null) return exactMatch
+        
+        // Fallback: if we can't find exact match, try to find any APK for this variant
+        val fallbackMatch = releaseInfo.assets
+            .find { it.variant == currentVariant }
+            ?.downloadUrl
+        
+        if (fallbackMatch != null) return fallbackMatch
+        
+        // Last resort: return any available APK
+        return releaseInfo.assets.firstOrNull()?.downloadUrl
     }
 
     /**
