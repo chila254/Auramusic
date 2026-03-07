@@ -36,7 +36,6 @@ import com.auramusic.app.R
 import com.auramusic.app.ui.component.IconButton
 import com.auramusic.app.ui.component.Material3SettingsGroup
 import com.auramusic.app.ui.component.Material3SettingsItem
-import com.auramusic.app.ui.component.ReleaseNotesCard
 import com.auramusic.app.ui.utils.backToMain
 import com.auramusic.app.utils.Updater
 
@@ -234,11 +233,6 @@ fun SettingsScreen(
                 }
             }
         )
-        
-        if (latestVersionName != BuildConfig.VERSION_NAME) {
-            Spacer(modifier = Modifier.height(16.dp))
-            ReleaseNotesCard()
-        }
         
         Spacer(modifier = Modifier.height(16.dp))
     }
