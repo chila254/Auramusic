@@ -19,7 +19,7 @@ object LyricsUtils {
     
     // Clean title for search - removes extra info like (Official Video), [Audio], etc.
     fun cleanTitleForSearch(title: String): String {
-        return title.replace(Regex("\\s*[(\\[]).*?[)\\]]"), "").trim()
+        return title.replace(Regex("\\s*\\(?.*?\\)|\\s*\\[.*?\\]"), "").trim()
     }
 
     // Regex for rich sync format: [MM:SS.mm]<MM:SS.mm> word <MM:SS.mm> word ...
