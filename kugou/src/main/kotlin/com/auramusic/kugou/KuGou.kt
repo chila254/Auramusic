@@ -6,6 +6,7 @@ import com.auramusic.kugou.models.SearchLyricsResponse
 import com.auramusic.kugou.models.SearchSongResponse
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
+import io.ktor.client.engine.okhttp.OkHttp
 import io.ktor.client.plugins.compression.ContentEncoding
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.request.get
@@ -14,15 +15,22 @@ import io.ktor.http.ContentType
 import io.ktor.http.encodeURLParameter
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.ExperimentalSerializationApi
-import kotlin.io.encoding.Base64
-import kotlin.io.encoding.ExperimentalEncodingApi
 import kotlinx.serialization.json.Json
+import kotlin.io.encoding.Base64
 import java.lang.Integer.min
 import kotlin.math.abs
 
-@OptIn(ExperimentalSerializationApi::class, ExperimentalEncodingApi::class)
-private val client = HttpClient {
+@OptIn(ExperimentalSerializationApi::class)
+private val client = HttpClient(OkHttp) {
     expectSuccess = true
+
+    engine {
+        config {
+            connectTimeout(30, java.util.concurrent.TimeUnit.SECONDS)
+            readTimeout(30, java.util.concurrent.TimeUnit.SECONDS)
+            writeTimeout(30, java.util.concurrent.TimeUnit.SECONDS)
+        }
+    }
 
     install(ContentNegotiation) {
         val json = Json {

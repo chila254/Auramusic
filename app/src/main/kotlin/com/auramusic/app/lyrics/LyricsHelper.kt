@@ -41,8 +41,6 @@ constructor(
             SimpMusicLyricsProvider,
             LrcLibLyricsProvider,
             KuGouLyricsProvider,
-            YouTubeSubtitleLyricsProvider,
-            YouTubeLyricsProvider
         )
 
     init {
@@ -51,11 +49,13 @@ constructor(
             context.dataStore.data
                 .map { preferences ->
                     val providerOrder = preferences[LyricsProviderOrderKey] ?: ""
+                    Timber.tag("LyricsHelper").d("Provider order from prefs: '$providerOrder'")
                     if (providerOrder.isNotBlank()) {
                         // Use the new provider order if available
                         LyricsProviderRegistry.getOrderedProviders(providerOrder)
                     } else {
                         // Fall back to preferred provider logic for backward compatibility
+                        Timber.tag("LyricsHelper").d("Using fallback provider logic")
                         val preferredProvider = preferences[PreferredLyricsProviderKey]
                             .toEnum(PreferredLyricsProvider.LRCLIB)
                         when (preferredProvider) {
@@ -64,37 +64,30 @@ constructor(
                                 BetterLyricsProvider,
                                 SimpMusicLyricsProvider,
                                 KuGouLyricsProvider,
-                                YouTubeSubtitleLyricsProvider,
-                                YouTubeLyricsProvider
                             )
                             PreferredLyricsProvider.KUGOU -> listOf(
                                 KuGouLyricsProvider,
                                 BetterLyricsProvider,
                                 SimpMusicLyricsProvider,
                                 LrcLibLyricsProvider,
-                                YouTubeSubtitleLyricsProvider,
-                                YouTubeLyricsProvider
                             )
                             PreferredLyricsProvider.BETTER_LYRICS -> listOf(
                                 BetterLyricsProvider,
                                 SimpMusicLyricsProvider,
                                 LrcLibLyricsProvider,
                                 KuGouLyricsProvider,
-                                YouTubeSubtitleLyricsProvider,
-                                YouTubeLyricsProvider
                             )
                             PreferredLyricsProvider.SIMPMUSIC -> listOf(
                                 SimpMusicLyricsProvider,
                                 BetterLyricsProvider,
                                 LrcLibLyricsProvider,
                                 KuGouLyricsProvider,
-                                YouTubeSubtitleLyricsProvider,
-                                YouTubeLyricsProvider
                             )
                         }
                     }
                 }.distinctUntilChanged()
                 .collect { providers ->
+                    Timber.tag("LyricsHelper").d("Updated providers: ${providers.map { it.name }}")
                     lyricsProviders = providers
                 }
         }
@@ -121,6 +114,7 @@ constructor(
         }
         
         if (!isNetworkAvailable) {
+            Timber.tag("LyricsHelper").w("Network not available, returning not found")
             // Still proceed but return not found to avoid hanging
             return LyricsWithProvider(LYRICS_NOT_FOUND, "Unknown")
         }
@@ -128,8 +122,13 @@ constructor(
         val scope = CoroutineScope(SupervisorJob())
         val deferred = scope.async {
             val cleanedTitle = LyricsUtils.cleanTitleForSearch(mediaMetadata.title)
+            val artistString = mediaMetadata.artists.joinToString { it.name }
+            Timber.tag("LyricsHelper").d("Searching lyrics for: title='$cleanedTitle', artist='$artistString'")
+            Timber.tag("LyricsHelper").d("Available providers: ${lyricsProviders.map { it.name }}")
             for (provider in lyricsProviders) {
-                if (provider.isEnabled(context)) {
+                val isEnabled = provider.isEnabled(context)
+                Timber.tag("LyricsHelper").d("Provider ${provider.name} isEnabled=$isEnabled")
+                if (isEnabled) {
                     try {
                         Timber.tag("LyricsHelper")
                             .d("Trying provider: ${provider.name} for $cleanedTitle")
@@ -153,10 +152,10 @@ constructor(
                         reportException(e)
                     }
                 } else {
-                    Timber.tag("LyricsHelper").d("Provider ${provider.name} is disabled")
+                    Timber.tag("LyricsHelper").d("Provider ${provider.name} is disabled, skipping")
                 }
             }
-            Timber.tag("LyricsHelper").w("All providers failed for ${mediaMetadata.title}")
+            Timber.tag("LyricsHelper").w("All providers failed or disabled for ${mediaMetadata.title}")
             return@async LyricsWithProvider(LYRICS_NOT_FOUND, "Unknown")
         }
 

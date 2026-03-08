@@ -387,7 +387,6 @@ fun ContentSettings(
             "KuGou".takeIf { enableKugou },
             "BetterLyrics".takeIf { enableBetterLyrics },
             "SimpMusic".takeIf { enableSimpMusic },
-            
         ).filterNotNull().toSet()
         val lyricsIcon = painterResource(R.drawable.lyrics)
         val draggableItems = remember { mutableStateListOf<DraggableLyricsProviderItem>() }

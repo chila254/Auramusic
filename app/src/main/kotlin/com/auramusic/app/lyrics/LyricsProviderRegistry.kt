@@ -11,8 +11,6 @@ object LyricsProviderRegistry {
         "SimpMusic" to SimpMusicLyricsProvider,
         "LrcLib" to LrcLibLyricsProvider,
         "KuGou" to KuGouLyricsProvider,
-        "YouTubeSubtitle" to YouTubeSubtitleLyricsProvider,
-        "YouTube" to YouTubeLyricsProvider,
     )
 
     val providerNames = providerMap.keys.toList()
@@ -26,7 +24,9 @@ object LyricsProviderRegistry {
         if (orderString.isBlank()) {
             return getDefaultProviderOrder()
         }
-        return orderString.split(",").map { it.trim() }.filter { it in providerNames }
+        val result = orderString.split(",").map { it.trim() }.filter { it in providerNames }
+        // If no valid providers found, return default order
+        return result.ifEmpty { getDefaultProviderOrder() }
     }
 
     fun serializeProviderOrder(providers: List<String>): String {
@@ -38,8 +38,6 @@ object LyricsProviderRegistry {
         "SimpMusic",
         "LrcLib",
         "KuGou",
-        "YouTubeSubtitle",
-        "YouTube",
     )
 
     fun getOrderedProviders(orderString: String): List<LyricsProvider> {

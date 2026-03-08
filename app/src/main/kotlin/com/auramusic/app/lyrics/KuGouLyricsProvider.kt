@@ -12,7 +12,7 @@ import com.auramusic.app.utils.dataStore
 import com.auramusic.app.utils.get
 
 object KuGouLyricsProvider : LyricsProvider {
-    override val name = "Kugou"
+    override val name = "KuGou"
     override fun isEnabled(context: Context): Boolean =
         context.dataStore[EnableKugouKey] ?: true
 
