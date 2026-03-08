@@ -28,6 +28,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 class LyricsHelper
@@ -57,7 +58,7 @@ constructor(
                 } else {
                     // Fall back to preferred provider logic
                     val preferredProvider = preferences[PreferredLyricsProviderKey]
-                        .toEnum(PreferredLyricsProvider.BETTER_LYRICS)
+                        .toEnum(PreferredLyricsProvider.LRCLIB)
                     when (preferredProvider) {
                         PreferredLyricsProvider.LRCLIB -> listOf(
                             LrcLibLyricsProvider,
@@ -138,6 +139,7 @@ constructor(
             for (provider in lyricsProviders) {
                 if (provider.isEnabled(context)) {
                     try {
+                        Timber.tag("LyricsHelper").d("Trying provider: ${provider.name} for $cleanedTitle")
                         val result = provider.getLyrics(
                             mediaMetadata.id,
                             cleanedTitle,
@@ -146,16 +148,22 @@ constructor(
                             mediaMetadata.album?.title,
                         )
                         result.onSuccess { lyrics ->
+                            Timber.tag("LyricsHelper").i("Successfully got lyrics from ${provider.name}")
                             return@async LyricsWithProvider(lyrics, provider.name)
-                        }.onFailure {
-                            reportException(it)
+                        }.onFailure { e ->
+                            Timber.tag("LyricsHelper").w("${provider.name} failed: ${e.message}")
+                            reportException(e)
                         }
                     } catch (e: Exception) {
                         // Catch network-related exceptions like UnresolvedAddressException
+                        Timber.tag("LyricsHelper").w("${provider.name} threw exception: ${e.message}")
                         reportException(e)
                     }
+                } else {
+                    Timber.tag("LyricsHelper").d("Provider ${provider.name} is disabled")
                 }
             }
+            Timber.tag("LyricsHelper").w("All providers failed for ${mediaMetadata.title}")
             return@async LyricsWithProvider(LYRICS_NOT_FOUND, "Unknown")
         }
 
