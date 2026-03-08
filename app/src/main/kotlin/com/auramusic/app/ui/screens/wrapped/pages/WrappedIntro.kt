@@ -160,16 +160,7 @@ fun WrappedIntro(onNext: () -> Unit) {
             verticalArrangement = Arrangement.Center
         ) {
             // App Icon
-            AnimatedVisibility(
-                visible = visible,
-                enter = fadeIn(animationSpec = tween(FADE_IN_DURATION, delayMillis = ICON_DELAY)) + slideInVertically(animationSpec = tween(SLIDE_IN_DURATION, delayMillis = ICON_DELAY))
-            ) {
-                Icon(
-                    painter = painterResource(id = R.drawable.app_logo),
-                    contentDescription = stringResource(id = R.string.wrapped_logo_content_description),
-                    modifier = Modifier.size(100.dp)
-                )
-            }
+            // Icon removed
 
             Spacer(modifier = Modifier.height(16.dp))
 
