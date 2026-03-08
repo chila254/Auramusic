@@ -29,12 +29,15 @@ import com.auramusic.app.utils.YTPlayerUtils.STREAM_FALLBACK_CLIENTS
 import com.auramusic.app.utils.YTPlayerUtils.validateStatus
 import okhttp3.OkHttpClient
 import timber.log.Timber
+import java.util.concurrent.TimeUnit
 
 object YTPlayerUtils {
     private const val logTag = "YTPlayerUtils"
 
     private val httpClient = OkHttpClient.Builder()
         .proxy(YouTube.proxy)
+        .connectTimeout(30, TimeUnit.SECONDS)
+        .readTimeout(30, TimeUnit.SECONDS)
         .build()
 
     private val MAIN_CLIENT: YouTubeClient = WEB_REMIX
