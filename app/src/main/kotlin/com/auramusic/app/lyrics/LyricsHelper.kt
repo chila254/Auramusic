@@ -22,11 +22,8 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.async
 import kotlinx.coroutines.cancel
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
@@ -95,18 +92,9 @@ constructor(
                     }
                 }
             }.distinctUntilChanged()
-            .onEach { providers ->
-                // Update the providers when preferences change
+            .map { providers ->
                 lyricsProviders = providers
             }
-
-    init {
-        // Trigger the Flow to start collecting
-        // This ensures lyricsProviders gets updated from preferences
-        kotlinx.coroutines.GlobalScope.launch {
-            preferred.collect { }
-        }
-    }
 
     private val cache = LruCache<String, List<LyricsResult>>(MAX_CACHE_SIZE)
     private var currentLyricsJob: Job? = null
