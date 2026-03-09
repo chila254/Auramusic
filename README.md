@@ -1,6 +1,6 @@
 <div align="center">
 <img src="app/src/main/res/mipmap-xxxhdpi/ic_launcher_foreground.png" width="160" height="160" style="display: block; margin: 0 auto"/>
-<h1>Auramusic</h1>
+<h1>AuraMusic</h1>
 <p>A modern Android music player with YouTube Music integration, powerful audio features, and a beautiful Material 3 interface.</p>
 
 <h1>Screenshots</h1>
