@@ -38,6 +38,7 @@ constructor(
     private var lyricsProviders =
         listOf(
             BetterLyricsProvider,
+            RushLyricsProvider,
             SimpMusicLyricsProvider,
             LrcLibLyricsProvider,
             KuGouLyricsProvider,
@@ -62,17 +63,20 @@ constructor(
                             PreferredLyricsProvider.LRCLIB -> listOf(
                                 LrcLibLyricsProvider,
                                 BetterLyricsProvider,
+                                RushLyricsProvider,
                                 SimpMusicLyricsProvider,
                                 KuGouLyricsProvider,
                             )
                             PreferredLyricsProvider.KUGOU -> listOf(
                                 KuGouLyricsProvider,
                                 BetterLyricsProvider,
+                                RushLyricsProvider,
                                 SimpMusicLyricsProvider,
                                 LrcLibLyricsProvider,
                             )
                             PreferredLyricsProvider.BETTER_LYRICS -> listOf(
                                 BetterLyricsProvider,
+                                RushLyricsProvider,
                                 SimpMusicLyricsProvider,
                                 LrcLibLyricsProvider,
                                 KuGouLyricsProvider,
@@ -80,6 +84,14 @@ constructor(
                             PreferredLyricsProvider.SIMPMUSIC -> listOf(
                                 SimpMusicLyricsProvider,
                                 BetterLyricsProvider,
+                                RushLyricsProvider,
+                                LrcLibLyricsProvider,
+                                KuGouLyricsProvider,
+                            )
+                            PreferredLyricsProvider.RUSH_LYRICS -> listOf(
+                                RushLyricsProvider,
+                                BetterLyricsProvider,
+                                SimpMusicLyricsProvider,
                                 LrcLibLyricsProvider,
                                 KuGouLyricsProvider,
                             )

@@ -23,8 +23,8 @@ android {
         applicationId = "com.auramusic.app"
         minSdk = 26
         targetSdk = 36
-        versionCode = 4
-        versionName = "1.0.3"
+        versionCode = 5
+        versionName = "1.0.4"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
@@ -96,21 +96,21 @@ android {
     signingConfigs {
         create("persistentDebug") {
             storeFile = file("keystore/persistent-debug.keystore")
-            storePassword = " "
-            keyAlias = " "
-            keyPassword = " "
+            storePassword = "android"
+            keyAlias = "androiddebugkey"
+            keyPassword = "android"
         }
         create("release") {
             storeFile = file("keystore/release.keystore")
-            storePassword = " "
-            keyAlias = " "
-            keyPassword = " "
+            storePassword = "auramusic123"
+            keyAlias = "auramusic"
+            keyPassword = "auramusic123"
         }
         getByName("debug") {
             storeFile = file("keystore/debug.keystore")
-            storePassword = " "
-            keyAlias = " "
-            keyPassword = " "
+            storePassword = "android"
+            keyAlias = "auramusicdebug"
+            keyPassword = "android"
         }
     }
 
@@ -290,6 +290,7 @@ dependencies {
     implementation(project(":betterlyrics"))
     implementation(project(":simpmusic"))
     implementation(project(":shazamkit"))
+    implementation(project(":rush"))
 
     implementation(libs.ktor.client.core)
     implementation(libs.ktor.client.cio)

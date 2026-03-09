@@ -125,6 +125,7 @@ import com.auramusic.innertube.models.WatchEndpoint
 import com.auramusic.app.constants.AppBarHeight
 import com.auramusic.app.constants.AppLanguageKey
 import com.auramusic.app.constants.LastSeenVersionKey
+import com.auramusic.app.constants.ChangelogShownForVersionKey
 import com.auramusic.app.constants.CheckForUpdatesKey
 import com.auramusic.app.constants.DarkModeKey
 import com.auramusic.app.constants.DefaultOpenTabKey
@@ -379,15 +380,22 @@ class MainActivity : ComponentActivity() {
                             
                             // Check if app was just updated
                             var lastSeenVersion: String? = null
+                            var changelogShownForVersion: String? = null
                             runBlocking {
                                 lastSeenVersion = dataStore.data.map { it[LastSeenVersionKey] }.first()
+                                changelogShownForVersion = dataStore.data.map { it[ChangelogShownForVersionKey] }.first()
                             }
                             val currentVersion = BuildConfig.VERSION_NAME
                             val isAppUpdated = lastSeenVersion != currentVersion
                             
-                            // If app was updated, show changelog
+                            // If app was updated, reset latest version to current to clear badges/notifications
+                            // and show changelog if not already shown for this version
                             if (isAppUpdated) {
-                                changelogState.value = true
+                                onLatestVersionNameChange(currentVersion)
+                                // Show changelog only if not already shown for this version
+                                if (changelogShownForVersion != currentVersion) {
+                                    changelogState.value = true
+                                }
                             }
                             
                             // If there's a new version available (and not just updated), show notification
@@ -416,9 +424,14 @@ class MainActivity : ComponentActivity() {
                                 }
                             }
                             
-                            // Update last seen version
+                            // Update last seen version (and mark changelog as shown only if app was updated)
                             runBlocking {
-                                dataStore.edit { it[LastSeenVersionKey] = currentVersion }
+                                dataStore.edit { 
+                                    it[LastSeenVersionKey] = currentVersion
+                                    if (isAppUpdated) {
+                                        it[ChangelogShownForVersionKey] = currentVersion
+                                    }
+                                }
                             }
                         }
                     }

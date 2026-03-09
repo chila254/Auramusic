@@ -501,6 +501,8 @@
     <string name="enable_better_lyrics_desc">Enable Better Lyrics provider (requires separate installation)</string>
     <string name="enable_simpmusic">Enable SimpMusic lyrics</string>
     <string name="enable_simpmusic_desc">Enable SimpMusic lyrics provider</string>
+    <string name="enable_rush_lyrics">Enable RushLyrics</string>
+    <string name="enable_rush_lyrics_desc">Enable RushLyrics provider (uses LyricsPlus API)</string>
     <string name="enable_lyricsplus">Enable LyricsPlus</string>
     <string name="enable_lyricsplus_desc">Use LyricsPlus as a lyrics source (aggregates multiple providers)</string>
     <string name="lyrics_provider_priority">Provider priority</string>
