@@ -1,3 +1,33 @@
+# AuraMusic v1.0.7 (Build 8) Changelog
+
+## New Features
+
+### AuraMusic Branding Update
+- Updated all internal references from the previous branding to AuraMusic
+- Changed "It seems like you found [previous app name] recently..." to "It seems like you found AuraMusic recently..." in WrappedData.kt
+
+## Bug Fixes
+
+- **Fixed % Display Issues in Wrapped**: Resolved an issue where percentage symbols were displaying literally instead of actual numbers in wrapped statistics screens:
+  - WrappedTotalSongsScreen.kt - Added missing uniqueSongCount parameter to stringResource()
+  - WrappedTotalArtistsScreen.kt - Added missing uniqueArtistCount parameter to stringResource()
+  - AlbumPages.kt - Added missing uniqueAlbumCount parameter to stringResource()
+
+- **Fixed Total Songs Not Showing in Wrapped Playlist**: Resolved an issue where the wrapped playlist was showing incorrect or zero song count. The root cause was a date mismatch between the playlist creation (hardcoded year from WrappedConstants.YEAR) and the dynamic date range used in data preparation:
+  - Updated createPlaylist() method in WrappedManager.kt to use the same dynamic date range as the prepare() method
+  - Updated generatePlaylistMap() method in WrappedManager.kt to use the same dynamic date range
+
+## Build Updates
+
+- Updated Java version to 17 for better compatibility
+- Version bump: 1.0.6 → 1.0.7 (Build 8)
+
+---
+
+**Full Changelog**: https://github.com/chila254/AuraMusic/compare/v1.0.6...v1.0.7
+
+---
+
 # AuraMusic v1.0.6 (Build 7) Changelog
 
 ## New Features
